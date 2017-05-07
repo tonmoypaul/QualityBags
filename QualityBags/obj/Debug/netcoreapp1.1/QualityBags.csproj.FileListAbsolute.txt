@@ -1,0 +1,10 @@
+c:\users\w3ico\onedrive\documents\visual studio 2017\Projects\QualityBags\QualityBags\bin\Debug\netcoreapp1.1\QualityBags.deps.json
+c:\users\w3ico\onedrive\documents\visual studio 2017\Projects\QualityBags\QualityBags\bin\Debug\netcoreapp1.1\QualityBags.runtimeconfig.json
+c:\users\w3ico\onedrive\documents\visual studio 2017\Projects\QualityBags\QualityBags\bin\Debug\netcoreapp1.1\QualityBags.runtimeconfig.dev.json
+c:\users\w3ico\onedrive\documents\visual studio 2017\Projects\QualityBags\QualityBags\bin\Debug\netcoreapp1.1\QualityBags.dll
+c:\users\w3ico\onedrive\documents\visual studio 2017\Projects\QualityBags\QualityBags\bin\Debug\netcoreapp1.1\QualityBags.pdb
+c:\users\w3ico\onedrive\documents\visual studio 2017\Projects\QualityBags\QualityBags\obj\Debug\netcoreapp1.1\QualityBags.csprojResolveAssemblyReference.cache
+c:\users\w3ico\onedrive\documents\visual studio 2017\Projects\QualityBags\QualityBags\obj\Debug\netcoreapp1.1\UserSecretsAssemblyInfo.cs
+c:\users\w3ico\onedrive\documents\visual studio 2017\Projects\QualityBags\QualityBags\obj\Debug\netcoreapp1.1\QualityBags.AssemblyInfo.cs
+c:\users\w3ico\onedrive\documents\visual studio 2017\Projects\QualityBags\QualityBags\obj\Debug\netcoreapp1.1\QualityBags.dll
+c:\users\w3ico\onedrive\documents\visual studio 2017\Projects\QualityBags\QualityBags\obj\Debug\netcoreapp1.1\QualityBags.pdb
