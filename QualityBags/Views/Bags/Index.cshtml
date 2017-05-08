@@ -4,56 +4,28 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<div class="container">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Price)
-                </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Supplier)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Supplier.ID)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <h2>Index</h2>
+
+    <div><a asp-action="Create">Create New</a></div>
+
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3">
+            <div class="eachItemBlock">
+                <div class="itemImage">
+                    <img class="thumbnailImage" src="~/uploads/@Html.DisplayFor(modelItem => item.ImagePath)" />
+                </div>
+                <div>
+                    <h5>@Html.DisplayFor(modelItem => item.Name)</h5>
+                    <h5>@Html.DisplayNameFor(model => model.Price): $@Html.DisplayFor(modelItem => item.Price)</h5>
+                    @Html.ActionLink("Details", "Details", "Bags", new { id = @item.ID }, new { @class = "btn btn-info btn-sm" }) | 
+                    @Html.ActionLink("Edit", "Edit", "Bags", new { id = @item.ID }, new { @class = "btn btn-warning btn-sm" }) | 
+                    @Html.ActionLink("Delete", "Delete", "Bags", new { id = @item.ID }, new {@class = "btn btn-danger btn-sm" })
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

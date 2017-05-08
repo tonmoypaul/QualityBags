@@ -11000,10 +11000,10 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\users\\w3ico\\onedrive\\documents\\visual studio 2017\\Projects\\QualityBags\\QualityBags\\QualityBags.csproj",
+      "projectUniqueName": "C:\\Users\\w3ico\\onedrive\\documents\\visual studio 2017\\Projects\\QualityBags\\QualityBags\\QualityBags.csproj",
       "projectName": "QualityBags",
-      "projectPath": "c:\\users\\w3ico\\onedrive\\documents\\visual studio 2017\\Projects\\QualityBags\\QualityBags\\QualityBags.csproj",
-      "outputPath": "c:\\users\\w3ico\\onedrive\\documents\\visual studio 2017\\Projects\\QualityBags\\QualityBags\\obj\\",
+      "projectPath": "C:\\Users\\w3ico\\onedrive\\documents\\visual studio 2017\\Projects\\QualityBags\\QualityBags\\QualityBags.csproj",
+      "outputPath": "C:\\Users\\w3ico\\onedrive\\documents\\visual studio 2017\\Projects\\QualityBags\\QualityBags\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "netcoreapp1.1"

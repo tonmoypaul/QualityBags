@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,22 +8,29 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QualityBags.Data;
 using QualityBags.Models;
+using QualityBags.ViewModels;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Net.Http.Headers;
+
 
 namespace QualityBags.Controllers
 {
     public class BagsController : Controller
     {
         private readonly QbDbContext _context;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public BagsController(QbDbContext context)
+        public BagsController(QbDbContext context, IHostingEnvironment hostingEnvironment)
         {
-            _context = context;    
+            _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         // GET: Bags
         public async Task<IActionResult> Index()
         {
             var qbDbContext = _context.Bags.Include(b => b.Category).Include(b => b.Supplier);
+
             return View(await qbDbContext.ToListAsync());
         }
 
@@ -51,6 +59,7 @@ namespace QualityBags.Controllers
         {
             ViewData["CategoryID"] = new SelectList(_context.Categories, "ID", "ID");
             ViewData["SupplierID"] = new SelectList(_context.Suppliers, "ID", "ID");
+            
             return View();
         }
 
@@ -59,17 +68,40 @@ namespace QualityBags.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Description,Price,CategoryID,SupplierID")] Bag bag)
+        public async Task<IActionResult> Create(BagViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(bag);
+                model.Bag.ImagePath = "";
+
+                if (model.ImageFile != null)
+                {
+                    var file = model.ImageFile;
+
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'); // FileName returns "fileName.ext"(with double quotes)
+
+                    if (fileName.EndsWith(".jpg"))// Important for security
+                    {
+                        var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads", fileName);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                        }
+
+                        model.Bag.ImagePath = fileName;
+
+                    }
+                }
+
+                _context.Add(model.Bag);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "ID", "ID", bag.CategoryID);
-            ViewData["SupplierID"] = new SelectList(_context.Suppliers, "ID", "ID", bag.SupplierID);
-            return View(bag);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "ID", "ID", model.Bag.CategoryID);
+            ViewData["SupplierID"] = new SelectList(_context.Suppliers, "ID", "ID", model.Bag.SupplierID);
+
+            return View(model);
         }
 
         // GET: Bags/Edit/5
@@ -95,7 +127,7 @@ namespace QualityBags.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Description,Price,CategoryID,SupplierID")] Bag bag)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Description,Price,CategoryID,SupplierID,ImagePath")] Bag bag)
         {
             if (id != bag.ID)
             {

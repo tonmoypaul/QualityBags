@@ -8,9 +8,10 @@ using QualityBags.Data;
 namespace QualityBags.Migrations
 {
     [DbContext(typeof(QbDbContext))]
-    partial class QbDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170508100853_AddUploadImagePath")]
+    partial class AddUploadImagePath
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
