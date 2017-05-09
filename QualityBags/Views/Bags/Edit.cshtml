@@ -1,4 +1,4 @@
-@model QualityBags.Models.Bag
+@model QualityBags.ViewModels.BagViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,52 +6,52 @@
 
 <h2>Edit</h2>
 
-<form asp-action="Edit">
+<form asp-action="Edit" enctype="multipart/form-data">
     <div class="form-horizontal">
         <h4>Bag</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="ID" />
+    <input type="hidden" asp-for="Bag.ID" />
         <div class="form-group">
-            <label asp-for="Name" class="col-md-2 control-label"></label>
+            <label asp-for="Bag.Name" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <input asp-for="Bag.Name" class="form-control" />
+                <span asp-validation-for="Bag.Name" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Description" class="col-md-2 control-label"></label>
+            <label asp-for="Bag.Description" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <input asp-for="Bag.Description" class="form-control" />
+                <span asp-validation-for="Bag.Description" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Price" class="col-md-2 control-label"></label>
+            <label asp-for="Bag.Price" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
+                <input asp-for="Bag.Price" class="form-control" />
+                <span asp-validation-for="Bag.Price" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="CategoryID" class="control-label col-md-2"></label>
+            <label asp-for="Bag.CategoryID" class="control-label col-md-2"></label>
             <div class="col-md-10">
-                <select asp-for="CategoryID" class="form-control" asp-items="ViewBag.CategoryID"></select>
-                <span asp-validation-for="CategoryID" class="text-danger"></span>
+                <select asp-for="Bag.CategoryID" class="form-control" asp-items="ViewBag.CategoryID"></select>
+                <span asp-validation-for="Bag.CategoryID" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="SupplierID" class="control-label col-md-2"></label>
+            <label asp-for="Bag.SupplierID" class="control-label col-md-2"></label>
             <div class="col-md-10">
-                <select asp-for="SupplierID" class="form-control" asp-items="ViewBag.SupplierID"></select>
-                <span asp-validation-for="SupplierID" class="text-danger"></span>
+                <select asp-for="Bag.SupplierID" class="form-control" asp-items="ViewBag.SupplierID"></select>
+                <span asp-validation-for="Bag.SupplierID" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="ImagePath" class="col-md-2 control-label"></label>
+            <label asp-for="ImageFile" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="ImagePath" class="form-control" />
-                <span asp-validation-for="ImagePath" class="text-danger"></span>
+                <input type="file" asp-for="ImageFile" class="form-control" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">

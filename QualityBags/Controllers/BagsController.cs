@@ -57,8 +57,8 @@ namespace QualityBags.Controllers
         // GET: Bags/Create
         public IActionResult Create()
         {
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "ID", "ID");
-            ViewData["SupplierID"] = new SelectList(_context.Suppliers, "ID", "ID");
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "ID", "Name");
+            ViewData["SupplierID"] = new SelectList(_context.Suppliers, "ID", "Name");
             
             return View();
         }
@@ -117,9 +117,15 @@ namespace QualityBags.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "ID", "ID", bag.CategoryID);
-            ViewData["SupplierID"] = new SelectList(_context.Suppliers, "ID", "ID", bag.SupplierID);
-            return View(bag);
+
+            var viewModel = new BagViewModel
+            {
+                Bag = bag
+            };
+
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "ID", "Name", bag.CategoryID);
+            ViewData["SupplierID"] = new SelectList(_context.Suppliers, "ID", "Name", bag.SupplierID);
+            return View(viewModel);
         }
 
         // POST: Bags/Edit/5
@@ -127,23 +133,46 @@ namespace QualityBags.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Description,Price,CategoryID,SupplierID,ImagePath")] Bag bag)
+        public async Task<IActionResult> Edit(int id, BagViewModel viewModel)
         {
-            if (id != bag.ID)
+            if (id != viewModel.Bag.ID)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
+
+                viewModel.Bag.ImagePath = "";
+
+                if (viewModel.ImageFile != null)
+                {
+                    var file = viewModel.ImageFile;
+
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'); // FileName returns "fileName.ext"(with double quotes)
+
+                    if (fileName.EndsWith(".jpg"))// Important for security
+                    {
+                        var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads", fileName);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                        }
+
+                        viewModel.Bag.ImagePath = fileName;
+
+                    }
+                }
+
                 try
                 {
-                    _context.Update(bag);
+                    _context.Update(viewModel.Bag);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BagExists(bag.ID))
+                    if (!BagExists(viewModel.Bag.ID))
                     {
                         return NotFound();
                     }
@@ -154,9 +183,11 @@ namespace QualityBags.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "ID", "ID", bag.CategoryID);
-            ViewData["SupplierID"] = new SelectList(_context.Suppliers, "ID", "ID", bag.SupplierID);
-            return View(bag);
+
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "ID", "Name", viewModel.Bag.CategoryID);
+            ViewData["SupplierID"] = new SelectList(_context.Suppliers, "ID", "Name", viewModel.Bag.SupplierID);
+
+            return View(viewModel.Bag);
         }
 
         // GET: Bags/Delete/5
