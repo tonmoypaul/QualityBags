@@ -64,7 +64,11 @@ namespace QualityBags.Controllers
                 PhoneNumber = await _userManager.GetPhoneNumberAsync(user),
                 TwoFactor = await _userManager.GetTwoFactorEnabledAsync(user),
                 Logins = await _userManager.GetLoginsAsync(user),
-                BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user)
+                BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user),
+                Address = user.Address,
+                FirstName = user.FirstName,
+                LastName = user.LastName
+                
             };
             return View(model);
         }

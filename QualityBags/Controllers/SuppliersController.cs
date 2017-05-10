@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QualityBags.Data;
 using QualityBags.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace QualityBags.Controllers
 {
+    [Authorize]
     public class SuppliersController : Controller
     {
         private readonly QbDbContext _context;
@@ -19,6 +21,7 @@ namespace QualityBags.Controllers
             _context = context;    
         }
 
+        [AllowAnonymous]
         // GET: Suppliers
         public async Task<IActionResult> Index()
         {
